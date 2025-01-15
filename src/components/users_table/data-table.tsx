@@ -22,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Link from "next/link"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -54,7 +55,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="border-solid border-2 border-gray-200">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -74,11 +75,30 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    if (cell.column.id === "operation") {
+                      return (
+                        <TableCell key={cell.id} className="border-solid border-2 border-gray-200">
+                          <Link href={`/users/${cell.row.original.id}`} key={cell.id}>Click me!</Link>
+                        </TableCell>
+                      )
+                    }
+                    else if(cell.column.id === "name") {
+                      return (
+                        <TableCell key={cell.id} className="border-solid border-2 border-gray-200">
+                          <Link href={`/users/${cell.row.original.id}`}>
+                            {cell.row.original.fname} {cell.row.original.lname}
+                          </Link>
+                        </TableCell>
+                      )
+                    }
+                    return (
+                      <TableCell key={cell.id} className="border-solid border-2 border-gray-200">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    )
+                  })
+                  }
                 </TableRow>
               ))
             ) : (
