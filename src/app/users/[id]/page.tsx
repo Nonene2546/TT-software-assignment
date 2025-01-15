@@ -61,7 +61,7 @@ export default function MyForm() {
     async function fetchUser() {
       const userData = await fetch(`/api/user/${params.id}`).then((res) => res.json());
       Object.keys(userData).forEach((key) => {
-        form.setValue(key, userData[key]);
+        form.setValue(key as keyof z.infer<typeof formSchema>, userData[key]);
       });
       setUser(userData);
     }
