@@ -1,6 +1,6 @@
 import { integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
 
-export const usersTable = pgTable("users", {
+export const users = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   hn: text().notNull().unique().generatedAlwaysAs('LPAD(id::TEXT, 6, \'0\')'),
   fname: varchar({ length: 255 }).notNull(),
