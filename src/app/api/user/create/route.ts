@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { addUser } from '@/lib/queries/userQueries';
 
-export async function POST(request) {
+import { NextRequest } from 'next/server';
+
+export async function POST(request: NextRequest) {
   const data = await request.json(); // Get the data from the request body
 
   // Add the new user

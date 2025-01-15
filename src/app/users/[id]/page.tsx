@@ -1,9 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
 import {
-  toast
-} from "sonner"
-import {
   useForm
 } from "react-hook-form"
 import {
@@ -11,15 +8,11 @@ import {
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import {
-  cn
-} from "@/lib/utils"
-import {
   Button
 } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -61,7 +54,7 @@ export default function MyForm() {
     async function fetchUser() {
       const userData = await fetch(`/api/user/${params.id}`).then((res) => res.json());
       Object.keys(userData).forEach((key) => {
-        form.setValue(key, userData[key]);
+        form.setValue(key as keyof z.infer<typeof formSchema>, userData[key]);
       });
       setUser(userData);
     }
